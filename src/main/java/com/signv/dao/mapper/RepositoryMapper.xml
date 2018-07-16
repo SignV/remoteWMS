@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.signv.dao.RepositoryMapper">
+  <resultMap id="BaseResultMap" type="com.signv.domain.Repository">
+    <id column="repository_num" jdbcType="INTEGER" property="repositoryNum" />
+    <result column="repository_name" jdbcType="VARCHAR" property="repositoryName" />
+    <result column="repository_address" jdbcType="VARCHAR" property="repositoryAddress" />
+    <result column="goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="nearby_transport_point" jdbcType="VARCHAR" property="nearbyTransportPoint" />
+    <result column="save_type" jdbcType="VARCHAR" property="saveType" />
+    <result column="built_area" jdbcType="VARCHAR" property="builtArea" />
+    <result column="repository_status" jdbcType="BIT" property="repositoryStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    repository_num, repository_name, repository_address, goods_type, nearby_transport_point, 
+    save_type, built_area, repository_status
+  </sql>
+  <select id="selectByExample" parameterType="com.signv.domain.RepositoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from repository
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repository
+    where repository_num = #{repositoryNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from repository
+    where repository_num = #{repositoryNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.signv.domain.RepositoryExample">
+    delete from repository
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.signv.domain.Repository">
+    insert into repository (repository_num, repository_name, repository_address, 
+      goods_type, nearby_transport_point, save_type, 
+      built_area, repository_status)
+    values (#{repositoryNum,jdbcType=INTEGER}, #{repositoryName,jdbcType=VARCHAR}, #{repositoryAddress,jdbcType=VARCHAR}, 
+      #{goodsType,jdbcType=VARCHAR}, #{nearbyTransportPoint,jdbcType=VARCHAR}, #{saveType,jdbcType=VARCHAR}, 
+      #{builtArea,jdbcType=VARCHAR}, #{repositoryStatus,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.signv.domain.Repository">
+    insert into repository
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="repositoryNum != null">
+        repository_num,
+      </if>
+      <if test="repositoryName != null">
+        repository_name,
+      </if>
+      <if test="repositoryAddress != null">
+        repository_address,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="nearbyTransportPoint != null">
+        nearby_transport_point,
+      </if>
+      <if test="saveType != null">
+        save_type,
+      </if>
+      <if test="builtArea != null">
+        built_area,
+      </if>
+      <if test="repositoryStatus != null">
+        repository_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="repositoryNum != null">
+        #{repositoryNum,jdbcType=INTEGER},
+      </if>
+      <if test="repositoryName != null">
+        #{repositoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryAddress != null">
+        #{repositoryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="nearbyTransportPoint != null">
+        #{nearbyTransportPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="saveType != null">
+        #{saveType,jdbcType=VARCHAR},
+      </if>
+      <if test="builtArea != null">
+        #{builtArea,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryStatus != null">
+        #{repositoryStatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.signv.domain.RepositoryExample" resultType="java.lang.Long">
+    select count(*) from repository
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update repository
+    <set>
+      <if test="record.repositoryNum != null">
+        repository_num = #{record.repositoryNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.repositoryName != null">
+        repository_name = #{record.repositoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repositoryAddress != null">
+        repository_address = #{record.repositoryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null">
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nearbyTransportPoint != null">
+        nearby_transport_point = #{record.nearbyTransportPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saveType != null">
+        save_type = #{record.saveType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.builtArea != null">
+        built_area = #{record.builtArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repositoryStatus != null">
+        repository_status = #{record.repositoryStatus,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update repository
+    set repository_num = #{record.repositoryNum,jdbcType=INTEGER},
+      repository_name = #{record.repositoryName,jdbcType=VARCHAR},
+      repository_address = #{record.repositoryAddress,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      nearby_transport_point = #{record.nearbyTransportPoint,jdbcType=VARCHAR},
+      save_type = #{record.saveType,jdbcType=VARCHAR},
+      built_area = #{record.builtArea,jdbcType=VARCHAR},
+      repository_status = #{record.repositoryStatus,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.signv.domain.Repository">
+    update repository
+    <set>
+      <if test="repositoryName != null">
+        repository_name = #{repositoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryAddress != null">
+        repository_address = #{repositoryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="nearbyTransportPoint != null">
+        nearby_transport_point = #{nearbyTransportPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="saveType != null">
+        save_type = #{saveType,jdbcType=VARCHAR},
+      </if>
+      <if test="builtArea != null">
+        built_area = #{builtArea,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryStatus != null">
+        repository_status = #{repositoryStatus,jdbcType=BIT},
+      </if>
+    </set>
+    where repository_num = #{repositoryNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.signv.domain.Repository">
+    update repository
+    set repository_name = #{repositoryName,jdbcType=VARCHAR},
+      repository_address = #{repositoryAddress,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      nearby_transport_point = #{nearbyTransportPoint,jdbcType=VARCHAR},
+      save_type = #{saveType,jdbcType=VARCHAR},
+      built_area = #{builtArea,jdbcType=VARCHAR},
+      repository_status = #{repositoryStatus,jdbcType=BIT}
+    where repository_num = #{repositoryNum,jdbcType=INTEGER}
+  </update>
+
+  <!--获取仓库列表-->
+  <select id="getRepositoryList" resultMap="BaseResultMap">
+    SELECT * FROM repository
+  </select>
+  <!--分页获取仓库列表-->
+  <select id="getRepositoryPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM repository Limit #{start},10
+  </select>
+</mapper>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.signv.dao.EpcMapper">
+  <resultMap id="BaseResultMap" type="com.signv.domain.Epc">
+    <id column="epc_id" jdbcType="INTEGER" property="epcId" />
+    <result column="epc_code" jdbcType="VARCHAR" property="epcCode" />
+    <result column="epc_goods_id" jdbcType="INTEGER" property="epcGoodsId" />
+    <result column="out_in_num" jdbcType="INTEGER" property="outInNum" />
+    <result column="epc_status" jdbcType="INTEGER" property="epcStatus" />
+    <result column="epc_date" jdbcType="TIMESTAMP" property="epcDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    epc_id, epc_code, epc_goods_id, out_in_num, epc_status, epc_date
+  </sql>
+  <select id="selectByExample" parameterType="com.signv.domain.EpcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from epc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from epc
+    where epc_id = #{epcId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from epc
+    where epc_id = #{epcId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.signv.domain.EpcExample">
+    delete from epc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.signv.domain.Epc">
+    insert into epc (epc_id, epc_code, epc_goods_id, 
+      out_in_num, epc_status, epc_date
+      )
+    values (#{epcId,jdbcType=INTEGER}, #{epcCode,jdbcType=VARCHAR}, #{epcGoodsId,jdbcType=INTEGER}, 
+      #{outInNum,jdbcType=INTEGER}, #{epcStatus,jdbcType=INTEGER}, #{epcDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.signv.domain.Epc">
+    insert into epc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="epcId != null">
+        epc_id,
+      </if>
+      <if test="epcCode != null">
+        epc_code,
+      </if>
+      <if test="epcGoodsId != null">
+        epc_goods_id,
+      </if>
+      <if test="outInNum != null">
+        out_in_num,
+      </if>
+      <if test="epcStatus != null">
+        epc_status,
+      </if>
+      <if test="epcDate != null">
+        epc_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="epcId != null">
+        #{epcId,jdbcType=INTEGER},
+      </if>
+      <if test="epcCode != null">
+        #{epcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="epcGoodsId != null">
+        #{epcGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="outInNum != null">
+        #{outInNum,jdbcType=INTEGER},
+      </if>
+      <if test="epcStatus != null">
+        #{epcStatus,jdbcType=INTEGER},
+      </if>
+      <if test="epcDate != null">
+        #{epcDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.signv.domain.EpcExample" resultType="java.lang.Long">
+    select count(*) from epc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update epc
+    <set>
+      <if test="record.epcId != null">
+        epc_id = #{record.epcId,jdbcType=INTEGER},
+      </if>
+      <if test="record.epcCode != null">
+        epc_code = #{record.epcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.epcGoodsId != null">
+        epc_goods_id = #{record.epcGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.outInNum != null">
+        out_in_num = #{record.outInNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.epcStatus != null">
+        epc_status = #{record.epcStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.epcDate != null">
+        epc_date = #{record.epcDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update epc
+    set epc_id = #{record.epcId,jdbcType=INTEGER},
+      epc_code = #{record.epcCode,jdbcType=VARCHAR},
+      epc_goods_id = #{record.epcGoodsId,jdbcType=INTEGER},
+      out_in_num = #{record.outInNum,jdbcType=INTEGER},
+      epc_status = #{record.epcStatus,jdbcType=INTEGER},
+      epc_date = #{record.epcDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.signv.domain.Epc">
+    update epc
+    <set>
+      <if test="epcCode != null">
+        epc_code = #{epcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="epcGoodsId != null">
+        epc_goods_id = #{epcGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="outInNum != null">
+        out_in_num = #{outInNum,jdbcType=INTEGER},
+      </if>
+      <if test="epcStatus != null">
+        epc_status = #{epcStatus,jdbcType=INTEGER},
+      </if>
+      <if test="epcDate != null">
+        epc_date = #{epcDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where epc_id = #{epcId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.signv.domain.Epc">
+    update epc
+    set epc_code = #{epcCode,jdbcType=VARCHAR},
+      epc_goods_id = #{epcGoodsId,jdbcType=INTEGER},
+      out_in_num = #{outInNum,jdbcType=INTEGER},
+      epc_status = #{epcStatus,jdbcType=INTEGER},
+      epc_date = #{epcDate,jdbcType=TIMESTAMP}
+    where epc_id = #{epcId,jdbcType=INTEGER}
+  </update>
+
+  <!--获取EPC码列表-->
+  <select id="getEpcList" resultMap="BaseResultMap">
+    SELECT * FROM epc
+  </select>
+  <!--分页获取EPC码列表-->
+  <select id="getEpcPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM epc Limit #{start},10
+  </select>
+  <!--根据EPC码查找EPC信息-->
+  <select id="getEpcByEpcCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM  epc WHERE epc_code = #{epcCode}
+  </select>
+</mapper>

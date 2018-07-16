@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.signv.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.signv.domain.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="stock_price" jdbcType="DOUBLE" property="stockPrice" />
+    <result column="sale_price" jdbcType="DOUBLE" property="salePrice" />
+    <result column="reserve_num" jdbcType="INTEGER" property="reserveNum" />
+    <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+    <result column="upper_limit" jdbcType="INTEGER" property="upperLimit" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="repository_num_goods" jdbcType="INTEGER" property="repositoryNumGoods" />
+    <result column="goods_epc" jdbcType="BIGINT" property="goodsEpc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    goods_id, goods_name, goods_type, stock_price, sale_price, reserve_num, total_price, 
+    upper_limit, remark, repository_num_goods, goods_epc
+  </sql>
+  <select id="selectByExample" parameterType="com.signv.domain.GoodsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.signv.domain.GoodsExample">
+    delete from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.signv.domain.Goods">
+    insert into goods (goods_id, goods_name, goods_type, 
+      stock_price, sale_price, reserve_num, 
+      total_price, upper_limit, remark, 
+      repository_num_goods, goods_epc)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
+      #{stockPrice,jdbcType=DOUBLE}, #{salePrice,jdbcType=DOUBLE}, #{reserveNum,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DOUBLE}, #{upperLimit,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{repositoryNumGoods,jdbcType=INTEGER}, #{goodsEpc,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.signv.domain.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="stockPrice != null">
+        stock_price,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="reserveNum != null">
+        reserve_num,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="upperLimit != null">
+        upper_limit,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="repositoryNumGoods != null">
+        repository_num_goods,
+      </if>
+      <if test="goodsEpc != null">
+        goods_epc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="stockPrice != null">
+        #{stockPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="reserveNum != null">
+        #{reserveNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="upperLimit != null">
+        #{upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryNumGoods != null">
+        #{repositoryNumGoods,jdbcType=INTEGER},
+      </if>
+      <if test="goodsEpc != null">
+        #{goodsEpc,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.signv.domain.GoodsExample" resultType="java.lang.Long">
+    select count(*) from goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update goods
+    <set>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null">
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockPrice != null">
+        stock_price = #{record.stockPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.salePrice != null">
+        sale_price = #{record.salePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.reserveNum != null">
+        reserve_num = #{record.reserveNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalPrice != null">
+        total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.upperLimit != null">
+        upper_limit = #{record.upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repositoryNumGoods != null">
+        repository_num_goods = #{record.repositoryNumGoods,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsEpc != null">
+        goods_epc = #{record.goodsEpc,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update goods
+    set goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      stock_price = #{record.stockPrice,jdbcType=DOUBLE},
+      sale_price = #{record.salePrice,jdbcType=DOUBLE},
+      reserve_num = #{record.reserveNum,jdbcType=INTEGER},
+      total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      upper_limit = #{record.upperLimit,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      repository_num_goods = #{record.repositoryNumGoods,jdbcType=INTEGER},
+      goods_epc = #{record.goodsEpc,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.signv.domain.Goods">
+    update goods
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="stockPrice != null">
+        stock_price = #{stockPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="salePrice != null">
+        sale_price = #{salePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="reserveNum != null">
+        reserve_num = #{reserveNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="upperLimit != null">
+        upper_limit = #{upperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="repositoryNumGoods != null">
+        repository_num_goods = #{repositoryNumGoods,jdbcType=INTEGER},
+      </if>
+      <if test="goodsEpc != null">
+        goods_epc = #{goodsEpc,jdbcType=BIGINT},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.signv.domain.Goods">
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      stock_price = #{stockPrice,jdbcType=DOUBLE},
+      sale_price = #{salePrice,jdbcType=DOUBLE},
+      reserve_num = #{reserveNum,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      upper_limit = #{upperLimit,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      repository_num_goods = #{repositoryNumGoods,jdbcType=INTEGER},
+      goods_epc = #{goodsEpc,jdbcType=BIGINT}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+
+  <!--获取货物列表-->
+  <select id="getGoodsList" resultMap="BaseResultMap">
+    SELECT * FROM goods
+  </select>
+  <!--分页获取货物列表-->
+  <select id="getGoodsPage" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM goods Limit #{start},10
+  </select>
+  <!--根据仓库号获取货物列表-->
+  <select id="getGoodsListByRepositoryNum" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM goods WHERE repository_num_goods = #{repositoryNum}
+  </select>
+  <!--根据仓库号分页获取货物列表-->
+  <select id="getGoodsPageRepository" resultMap="BaseResultMap">
+    SELECT * FROM (SELECT * FROM goods WHERE repository_num_goods = #{repositoryNum})rgoods Limit #{start},10
+  </select>
+</mapper>
